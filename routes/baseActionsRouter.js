@@ -18,6 +18,7 @@ var coins = require("./../app/coins.js");
 var config = require("./../app/config.js");
 var coreApi = require("./../app/api/coreApi.js");
 var addressApi = require("./../app/api/addressApi.js");
+var rpcApi = require("./../app/api/rpcApi.js");
 
 const forceCsrf = csurf({ ignoreMethods: [] });
 
@@ -644,9 +645,9 @@ router.get("/address/:address", function(req, res, next) {
 			res.locals.electrumScripthash = addrScripthash;
 
 			promises.push(new Promise(function(resolve, reject) {
-				addressApi.getAddressDetails(address, validateaddressResult.scriptPubKey, sort, limit, offset).then(function(addressDetailsResult) {
+				rpcApi.getAddressDetails(address, validateaddressResult.scriptPubKey, sort, limit, offset).then(function(addressDetailsResult) {
 					var addressDetails = addressDetailsResult.addressDetails;
-
+					
 					if (addressDetailsResult.errors) {
 						res.locals.addressDetailsErrors = addressDetailsResult.errors;
 					}

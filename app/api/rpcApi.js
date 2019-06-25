@@ -2,6 +2,8 @@ var debug = require('debug');
 
 var debugLog = debug("btcexp:rpc");
 
+var hexEnc = require("crypto-js/enc-hex");
+var sha256 = require("crypto-js/sha256");
 var async = require("async");
 
 var utils = require("../utils.js");
@@ -197,6 +199,112 @@ function getRpcDataWithParams(request) {
 }
 
 
+function getAddressDetails(address, scriptPubkey, sort, limit, offset) {
+	return new Promise(function(resolve, reject) {
+		
+		var promises = [];
+
+		var txidData = null;
+		var balanceData = null;
+		promises.push(new Promise(function(resolve, reject) {
+			getAddressTxids(address).then(function(result) {
+				if(result)
+					txidData = result;
+				resolve();
+
+			}).catch(function(err) {
+				utils.logError("2397wgs0sgse", err);
+
+				reject(err);
+			});
+		}));
+
+		promises.push(new Promise(function(resolve, reject) {
+			getAddressBalance(address).then(function(result) {
+				if(result)
+					balanceData = result;
+				resolve();
+				
+			}).catch(function(err) {
+				utils.logError("21307ws70sg", err);
+
+				reject(err);
+			});
+		}));
+
+		Promise.all(promises.map(utils.reflectPromise)).then(function(results) {
+			var addressDetails = {};
+			if (txidData) {
+				addressDetails.txCount = txidData.length;
+
+				addressDetails.txids = [];
+				addressDetails.blockHeightsByTxid = {};
+
+				if (sort == "desc") {
+					txidData.reverse();
+				}
+
+				for (var i = offset; i < Math.min(txidData.length, limit + offset); i++) {
+					addressDetails.txids.push(txidData[i]);
+					// addressDetails.blockHeightsByTxid[txidData[i].tx_hash] = txidData[i].height;
+				}
+			}
+
+			if (balanceData) {
+				addressDetails.balanceSat = balanceData.balance;
+			}
+
+			var errors = [];
+			results.forEach(function(x) {
+				if (x.status == "rejected") {
+					errors.push(x);
+				}
+ 			});
+
+			debugLog(addressDetails)
+			resolve({addressDetails:addressDetails, errors:errors});
+		});
+	});
+}
+
+function getAddressTxids(address) {
+
+	debugLog(`getAddressTxids=${utils.ellipsize(JSON.stringify(address), 200)}`);
+	return new Promise(function(resolve, reject) {
+		var arg = {"addresses": [address]};
+		getRpcDataWithParams({method:"getaddresstxids", parameters:[arg]}).then(function(results) {
+			if (address == coinConfig.genesisCoinbaseOutputAddress) {
+				for (var i = 0; i < results.length; i++) {
+					results[i].result.unshift({tx_hash:coinConfig.genesisCoinbaseTransactionId, height:0});
+				}
+			}
+
+			resolve(results);
+		}).catch(function(err) {
+			reject(err);
+		});
+	});
+}
+
+function getAddressBalance(address) {
+
+	debugLog(`getAddressBalance=${JSON.stringify(address)}`);
+	return new Promise(function(resolve, reject) {
+		var arg = {"addresses": [address]};
+		getRpcDataWithParams({method:"getaddressbalance", parameters:[arg]}).then(function(results) {
+			if (address == coinConfig.genesisCoinbaseOutputAddress) {
+				for (var i = 0; i < results.length; i++) {
+					var coinbaseBlockReward = coinConfig.blockRewardFunction(0);
+					
+					results[i].result.confirmed += (coinbaseBlockReward * coinConfig.baseCurrencyUnit.multiplier);
+				}
+			}
+			resolve(results);
+		}).catch(function(err) {
+			reject(err);
+		});
+	});
+}
 module.exports = {
 	getBlockchainInfo: getBlockchainInfo,
 	getNetworkInfo: getNetworkInfo,
@@ -212,5 +320,6 @@ module.exports = {
 	getRpcMethodHelp: getRpcMethodHelp,
 	getAddress: getAddress,
 	getPeerInfo: getPeerInfo,
-	getChainTxStats: getChainTxStats
+	getChainTxStats: getChainTxStats,
+	getAddressDetails:getAddressDetails
 };

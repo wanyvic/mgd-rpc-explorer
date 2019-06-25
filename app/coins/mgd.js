@@ -104,6 +104,8 @@ module.exports = {
 		"time": 1507956294,
 		"blocktime": 1507956294
 	},
+	genesisCoinbaseOutputAddressScripthash:"3db377f3fa2b6aa750b37cba4261800093ce6ab3a31ce6d08ce542bc027fae8c",
+	genesisCoinbaseOutputAddress:"MNRfd5p2YLoQsyPPTYDS5VNXGDtStnTwdA",
 	historicalData: [
 		{
 			type: "blockheight",
