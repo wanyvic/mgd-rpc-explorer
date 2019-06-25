@@ -124,7 +124,7 @@ function getRawTransaction(txid) {
 
 					return;
 				}
-
+				result.vsize = result.size;
 				resolve(result);
 
 			}).catch(function(err) {

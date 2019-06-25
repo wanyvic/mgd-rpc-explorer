@@ -143,8 +143,9 @@ module.exports = {
 				{
 					title:"Related Sites",
 					links:[
-						{name: "Bitcoin Explorer", url:"https://btc.chaintools.io", imgUrl:"/img/logo/btc.svg"},
-						{name: "LND Admin", url:"https://lnd-admin.chaintools.io", imgUrl:"/img/logo/lnd-admin.png"},
+						{name: "MassGrid", url:"https://massgrid.com", imgUrl:"/img/logo/mgd.png"},
+						// {name: "Bitcoin Explorer", url:"https://btc.chaintools.io", imgUrl:"/img/logo/btc.svg"},
+						// {name: "LND Admin", url:"https://lnd-admin.chaintools.io", imgUrl:"/img/logo/lnd-admin.png"},
 						//{name: "Litecoin Explorer", url:"https://ltc.chaintools.io", imgUrl:"/img/logo/ltc.svg"},
 						//{name: "Lightning Explorer", url:"https://lightning.chaintools.io", imgUrl:"/img/logo/lightning.svg"},
 					]

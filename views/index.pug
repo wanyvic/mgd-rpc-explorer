@@ -20,21 +20,21 @@ block content
 				span
 					strong #{coinConfig.siteTitle}
 					span  is 
-					a(href="https://github.com/janoside/btc-rpc-explorer", target="_blank") open-source
+					a(href="https://github.com/wanyvic/mgd-rpc-explorer", target="_blank") open-source
 					span  and easy to set up. It can communicate with your 
 					a(href=coinConfig.nodeUrl, target="_blank") #{coinConfig.name} Full Node
 					span  via RPC. See the 
-					a(href="https://github.com/janoside/btc-rpc-explorer", target="_blank") project description
+					a(href="https://github.com/wanyvic/mgd-rpc-explorer", target="_blank") project description
 					span  for a list of features and instructions for running.
 
 				if (global.sourcecodeProjectMetadata)
 					div.mt-2
-						a(href="https://github.com/janoside/btc-rpc-explorer", class="btn btn-primary mr-3 mb-1")
+						a(href="https://github.com/wanyvic/mgd-rpc-explorer", class="btn btn-primary mr-3 mb-1")
 							i(class="fas fa-star mr-2")
 							span(class="mr-2") Star 
 							span(class="badge bg-white text-dark") #{global.sourcecodeProjectMetadata.stargazers_count}
 
-						a(href="https://github.com/janoside/btc-rpc-explorer/fork", class="btn btn-primary mr-3 mb-1")
+						a(href="https://github.com/wanyvic/mgd-rpc-explorer/fork", class="btn btn-primary mr-3 mb-1")
 							i(class="fas fa-code-branch mr-2")
 							span(class="mr-2") Fork 
 							span(class="badge bg-white text-dark") #{global.sourcecodeProjectMetadata.forks_count}
@@ -88,7 +88,7 @@ block content
 
 						p(class="lead")
 							span #{hashrateData[0]} 
-							span.border-dotted(title=`${hashrateData[1].abbreviation}H = ${hashrateData[1].name}-hash (x10^${hashrateData[1].exponent})`, data-toggle="tooltip") #{hashrateData[1].abbreviation}H/s
+							span.border-dotted(title=`${hashrateData[1].abbreviation}H = ${hashrateData[1].name}-hash (x10^${hashrateData[1].exponent})`, data-toggle="tip") #{hashrateData[1].abbreviation}H/s
 
 					if (txStats)
 						div(class=networkSummaryColumnClass)
@@ -120,7 +120,7 @@ block content
 						span(class="font-weight-bold") Chainwork
 						
 						p(class="lead")
-							span.mr-2.border-dotted(data-toggle="tooltip", title=getblockchaininfo.chainwork.replace(/^0+/, ''))
+							span.mr-2.border-dotted(data-toggle="tip", title=getblockchaininfo.chainwork.replace(/^0+/, ''))
 								span #{chainworkData[0]}
 								span  x 10
 								sup #{chainworkData[1].exponent}
@@ -136,7 +136,7 @@ block content
 						span(class="font-weight-bold") Difficulty
 
 						p(class="lead")
-							span.mr-2.border-dotted(data-toggle="tooltip", title=parseFloat(getblockchaininfo.difficulty).toLocaleString())
+							span.mr-2.border-dotted(data-toggle="tip", title=parseFloat(getblockchaininfo.difficulty).toLocaleString())
 								span #{difficultyData[0]}
 								span  x 10
 								sup #{difficultyData[1].exponent}
@@ -157,7 +157,7 @@ block content
 								span
 									i(class="fas fa-money-bill-wave-alt fa-2x mr-2", style="margin-top: 7px;")
 
-							span.font-weight-bold.border-dotted(data-toggle="tooltip", title=("Exchange-rate data from: " + coinConfig.exchangeRateData.jsonUrl)) Exchange Rate 
+							span.font-weight-bold.border-dotted(data-toggle="tip", title=("Exchange-rate data from: " + coinConfig.exchangeRateData.jsonUrl)) Exchange Rate 
 
 							if (global.exchangeRates)
 								p(class="lead") #{utils.formatExchangedCurrency(1.0, "usd")}
@@ -165,7 +165,7 @@ block content
 								p(class="lead") -
 
 
-		include includes/tools-card.pug
+		//- include includes/tools-card.pug
 		
 		if (latestBlocks)
 			div(class="card mb-4 shadow-sm")
