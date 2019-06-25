@@ -161,7 +161,7 @@ html(lang="en")
 									a(href=("https://github.com/wanyvic/mgd-rpc-explorer/commit/" + sourcecodeVersion)) #{sourcecodeVersion}
 									span(style="color: #ccc;")  (#{sourcecodeDate})
 
-							if (config.demoSite)
+							if (false && config.demoSite)
 								dt Public Demos
 								dd
 									if (coinConfig.demoSiteUrl)
@@ -177,13 +177,13 @@ html(lang="en")
 
 										a(href="https://lnd-admin.chaintools.io", class="mr-2", title="LND Admin")
 											img(src=("/img/logo/lnd-admin.png"), style="width: 32px; height: 32px;", alt="LND Admin")
-
-					div(class="col-md-7 text-md-right")
-						dl
-							dd
-								button.btn.btn-primary(type="button", class="btn btn-primary", data-toggle="modal", data-target="#exampleModalCenter")
-									i(class="fas fa-heart mr-2")
-									span Support Development
+					if (false)
+						div(class="col-md-7 text-md-right")
+							dl
+								dd
+									button.btn.btn-primary(type="button", class="btn btn-primary", data-toggle="modal", data-target="#exampleModalCenter")
+										i(class="fas fa-heart mr-2")
+										span Support Development
 		
 		script(src="/js/jquery.min.js", integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=")
 		script(src="/js/popper.min.js", integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut")
